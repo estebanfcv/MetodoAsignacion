@@ -1,11 +1,16 @@
 package reglas;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 import to.DatoMatrizTO;
 import util.RenderCelda;
+import util.Util;
 
 /**
  *
@@ -18,6 +23,10 @@ public class Procedimiento {
     private JTable tablaResultado;
     private Integer[][] matriz;
     private int numero;
+    private Map<Integer, Integer> renglonesTachados;
+    private Map<Integer, Integer> columnasTachadas;
+    private Map<Integer, Integer> renglonesLinea;
+    private Map<Integer, Integer> columnasLinea;
 
     public Procedimiento(JTable tablaOriginal, JTable tablaResultado) {
         this.tablaOriginal = tablaOriginal;
@@ -40,6 +49,7 @@ public class Procedimiento {
         pasoUno();
         pasoDos();
         pasoTres();
+        pasoCuatro();
         generarResultado();
         imprimirMapa();
         pintarMatriz();
@@ -162,7 +172,85 @@ public class Procedimiento {
                 }
             }
         }
+    }
 
+    private void pasoCuatro() {
+        System.out.println("entro al paso Cuatro \n");
+        renglonesTachados = new LinkedHashMap<>();
+        columnasTachadas = new LinkedHashMap<>();
+        renglonesLinea = new LinkedHashMap<>();
+        columnasLinea = new LinkedHashMap<>();
+        boolean cerosMarcados;
+        List<DatoMatrizTO> listaRenglon;
+        //a) deben marcarse el renglon o renglones que tengan exclusivamente uno o varios 0’s eliminados o tachados
+        for (int renglon = 0; renglon < matriz.length; renglon++) {
+            listaRenglon = new ArrayList<>();
+            cerosMarcados = false;
+            //a.1 verificar que el renglón contenga 0's
+            for (int columna = 0; columna < matriz.length; columna++) {
+                if (mapa.get(renglon + "|" + columna).isCero()) {
+                    listaRenglon.add(mapa.get(renglon + "|" + columna));
+                }
+            }
+            // a.2 ver el tipo de 0's que tiene (tachado, marcado)
+            if (!listaRenglon.isEmpty()) {
+                for (DatoMatrizTO dm : listaRenglon) {
+                    if (dm.isMarcado()) {
+                        cerosMarcados = true;
+                        break;
+                    }
+                }
+                if (!cerosMarcados) {
+                    renglonesTachados.put(renglon, renglon);
+                }
+            }
+        }
+        //b) marcardo el renglón o renglones del punto a) se revisan dichos renglones y
+        //donde esté el 0 eliminado o tachado identifica columnas y se marcan
+        for (Integer renglon : renglonesTachados.keySet()) {
+            for (int columna = 0; columna < matriz.length; columna++) {
+                if (mapa.get(renglon + "|" + columna).isTachado()) {
+                    columnasTachadas.put(columna, columna);
+                }
+            }
+        }
+        //c) marcada la columna o columnas se revisan y en la posición donde se ubique el 0 seleccionado, 
+        //hay que identificar el o los renglones y se marcan
+        for (int renglon = 0; renglon < matriz.length; renglon++) {
+            for (Integer columna : columnasTachadas.keySet()) {
+                if (mapa.get(renglon + "|" + columna).isCero() && mapa.get(renglon + "|" + columna).isMarcado()) {
+                    System.out.println("PUT " + renglon + "|" + columna);
+                    renglonesTachados.put(renglon, renglon);
+                }
+            }
+        }
+        //d) finalmente, las líneas deben trazarse en el o los renglones no marcados y columnas marcadas.
+        for (int renglon = 0; renglon < matriz.length; renglon++) {
+            if (renglonesTachados.get(renglon) == null) {
+                renglonesLinea.put(renglon, renglon);
+            }
+        }
+
+        for (int columna = 0; columna < matriz.length; columna++) {
+            if (columnasTachadas.get(columna) != null) {
+                columnasLinea.put(columna, columna);
+            }
+        }
+
+        for (Integer renglon : renglonesTachados.keySet()) {
+            System.out.println("el renglon es::::: " + renglon);
+        }
+
+        for (Integer columna : columnasTachadas.keySet()) {
+            System.out.println("la columna es::::: " + columna);
+        }
+        for (Integer renglon : renglonesLinea.keySet()) {
+            System.out.println("el renglonesLinea es::::: " + renglon);
+        }
+
+        for (Integer columna : columnasLinea.keySet()) {
+            System.out.println("la columnasLinea es::::: " + columna);
+        }
     }
 
     private void generarResultado() {
