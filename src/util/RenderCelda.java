@@ -26,11 +26,10 @@ public class RenderCelda extends DefaultTableCellRenderer {
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         DatoMatrizTO dato = mapa.get(row + "|" + column);
-        Integer amount = (Integer) value;
-        if (amount == 0 && dato.isMarcado()) {
+        if (dato.isSeleccionado()) {
             cell.setBackground(Color.GREEN);
             cell.setForeground(Color.WHITE);
-        } else if (amount == 0 && dato.isTachado()) {
+        } else if ( dato.isEliminado()) {
             cell.setBackground(Color.RED);
             cell.setForeground(Color.WHITE);
         } else {

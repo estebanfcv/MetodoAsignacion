@@ -6,15 +6,13 @@ package to;
  */
 public class DatoMatrizTO {
     
-    // sera un to que incluya el valor, isCero, marcado, tachado, intercectado
-    
     private int valor;
     private int renglon;
     private int columna;
     private boolean cero;
-    private boolean marcado;
-    private boolean interceptado;
-    private boolean tachado;
+    private boolean seleccionado;
+    private boolean cruzado;
+    private boolean eliminado;
 
     public int getValor() {
         return valor;
@@ -32,29 +30,31 @@ public class DatoMatrizTO {
         this.cero = cero;
     }
 
-    public boolean isMarcado() {
-        return marcado;
+    public boolean isSeleccionado() {
+        return seleccionado;
     }
 
-    public void setMarcado(boolean marcado) {
-        this.marcado = marcado;
+    public void setSeleccionado(boolean seleccionado) {
+        this.seleccionado = seleccionado;
     }
 
-    public boolean isInterceptado() {
-        return interceptado;
+    public boolean isEliminado() {
+        return eliminado;
     }
 
-    public void setInterceptado(boolean interceptado) {
-        this.interceptado = interceptado;
+    public void setEliminado(boolean eliminado) {
+        this.eliminado = eliminado;
     }
 
-    public boolean isTachado() {
-        return tachado;
+
+    public boolean isCruzado() {
+        return cruzado;
     }
 
-    public void setTachado(boolean tachado) {
-        this.tachado = tachado;
+    public void setCruzado(boolean cruzado) {
+        this.cruzado = cruzado;
     }
+
 
     public int getRenglon() {
         return renglon;

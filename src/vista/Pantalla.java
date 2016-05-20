@@ -4,9 +4,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 import reglas.Procedimiento;
-import util.RenderCelda;
 import util.Util;
 
 /**
@@ -14,6 +12,8 @@ import util.Util;
  * @author estebanfcv
  */
 public class Pantalla extends javax.swing.JFrame {
+
+    private Procedimiento procedimiento;
 
     /**
      * Creates new form Pantalla
@@ -33,7 +33,7 @@ public class Pantalla extends javax.swing.JFrame {
 
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        spinner = new JSpinner(new SpinnerNumberModel(4, 2, 10, 1));
+        spinner = new JSpinner(new SpinnerNumberModel(1, 1, 10, 1));
         botonCalcular = new javax.swing.JButton();
         panelOriginal = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -42,6 +42,9 @@ public class Pantalla extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        resultados = new javax.swing.JTextArea();
+        jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaOriginal = new javax.swing.JTable();
         botonLimpiar = new javax.swing.JButton();
@@ -49,6 +52,9 @@ public class Pantalla extends javax.swing.JFrame {
         jLabel3.setText("jLabel3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Método asignación");
+        setPreferredSize(new java.awt.Dimension(786, 700));
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -117,6 +123,17 @@ public class Pantalla extends javax.swing.JFrame {
             .addGap(0, 22, Short.MAX_VALUE)
         );
 
+        resultados.setColumns(20);
+        resultados.setRows(5);
+        jScrollPane3.setViewportView(resultados);
+
+        jButton1.setText("Ver procedimiento");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelOriginalLayout = new javax.swing.GroupLayout(panelOriginal);
         panelOriginal.setLayout(panelOriginalLayout);
         panelOriginalLayout.setHorizontalGroup(
@@ -124,7 +141,7 @@ public class Pantalla extends javax.swing.JFrame {
             .addGroup(panelOriginalLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelOriginalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 736, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
                     .addGroup(panelOriginalLayout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -133,32 +150,36 @@ public class Pantalla extends javax.swing.JFrame {
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(39, 39, 39)
+                        .addComponent(jButton1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3))
                 .addContainerGap())
         );
         panelOriginalLayout.setVerticalGroup(
             panelOriginalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelOriginalLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelOriginalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelOriginalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel2)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel4)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(70, 70, 70)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         tablaOriginal.setModel(new javax.swing.table.DefaultTableModel(
             new Integer [][] {
-                {48, 48, 50, 44},
-                {56, 60, 60, 68},
-                {96, 94, 90, 85},
-                {42, 44, 54, 46}
+                {0}
             },
             new String [] {
-                "A", "B","C","D"
+                "A"
             }
         ));
         tablaOriginal.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
@@ -214,8 +235,7 @@ public class Pantalla extends javax.swing.JFrame {
                     .addComponent(botonCalcular)
                     .addComponent(botonLimpiar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelOriginal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(panelOriginal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -223,6 +243,7 @@ public class Pantalla extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         panelOriginal.setVisible(false);
+        resultados.setEditable(false);
     }//GEN-LAST:event_formWindowOpened
 
     private void botonCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCalcularActionPerformed
@@ -250,12 +271,9 @@ public class Pantalla extends javax.swing.JFrame {
         spinner.setEnabled(false);
         tablaOriginal.setEnabled(false);
         botonCalcular.setEnabled(false);
-        
-        Procedimiento procedimiento = new Procedimiento(tablaOriginal,tablaResultados);
-//          TableCellRenderer renderer = new RenderCelda();
-//        tablaResultados.setDefaultRenderer(Object.class, renderer);
-//        panelOriginal.updateUI();
-        
+
+        procedimiento = new Procedimiento(tablaOriginal, tablaResultados, resultados);
+
     }//GEN-LAST:event_botonCalcularActionPerformed
 
     private void spinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinnerStateChanged
@@ -268,7 +286,6 @@ public class Pantalla extends javax.swing.JFrame {
         if (row != -1 && colum != -1) {
             Object valor = tablaOriginal.getValueAt(row, colum);
             if (valor == null || valor.toString().trim().isEmpty() || !Util.isNumero(valor.toString())) {
-                System.out.println("el valor es::::::: " + valor);
                 tablaOriginal.setValueAt(0, row, colum);
             } else {
                 tablaOriginal.setValueAt(new Integer(valor.toString()), row, colum);
@@ -281,14 +298,22 @@ public class Pantalla extends javax.swing.JFrame {
         spinner.setEnabled(true);
         tablaOriginal.setEnabled(true);
         botonCalcular.setEnabled(true);
+        resultados.setText("");
         inicializarTabla();
     }//GEN-LAST:event_botonLimpiarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        PantallaProcedimiento pantallaProcedimiento = new PantallaProcedimiento();
+        pantallaProcedimiento.setVisible(true);
+        pantallaProcedimiento.getTxtProcedimiento().setText(procedimiento.getPasos());
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     private boolean validarDatos() {
         for (int renglon = 0; renglon < tablaOriginal.getRowCount(); renglon++) {
             for (int columna = 0; columna < tablaOriginal.getColumnCount(); columna++) {
                 Integer valor = tablaOriginal.getValueAt(renglon, columna) == null ? 0 : (Integer) tablaOriginal.getValueAt(renglon, columna);
-                if (valor == 0) {
+                if (valor < 0) {
                     return false;
                 }
             }
@@ -353,6 +378,7 @@ public class Pantalla extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonCalcular;
     private javax.swing.JButton botonLimpiar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -361,7 +387,9 @@ public class Pantalla extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JPanel panelOriginal;
+    private javax.swing.JTextArea resultados;
     private javax.swing.JSpinner spinner;
     private javax.swing.JTable tablaOriginal;
     private javax.swing.JTable tablaResultados;
