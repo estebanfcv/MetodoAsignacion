@@ -223,7 +223,6 @@ public class Pantalla extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         panelOriginal.setVisible(false);
         resultados.setEditable(false);
-        System.out.println("los margenes son: "+Util.debugImprimirContenidoObjecto(resultados.getMargin()));
           resultados.setMargin(new Insets(-5, 0, -5, 0));
     }//GEN-LAST:event_formWindowOpened
 
@@ -249,6 +248,7 @@ public class Pantalla extends javax.swing.JFrame {
         }
         DefaultTableModel dtm = new DefaultTableModel(datos, columnas);
         tablaResultados.setModel(dtm);
+        resultados.setText("");
         procedimiento = new Procedimiento(tablaOriginal, tablaResultados, resultados);
 
     }//GEN-LAST:event_botonCalcularActionPerformed

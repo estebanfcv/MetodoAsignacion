@@ -8,7 +8,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.table.TableCellRenderer;
 import to.DatoMatrizTO;
-import util.RenderCelda;
+import vista.RenderCelda;
 
 /**
  *
@@ -34,6 +34,7 @@ public class Procedimiento {
         this.tablaOriginal = tablaOriginal;
         this.tablaResultado = tablaResultado;
         this.txtResultados = txtResultados;
+
         contador = 1;
         builder = new StringBuilder(Instrucciones.TITULO);
         builder.append(Instrucciones.SUBTITULO_1).append(contador).append(Instrucciones.SUBTITULO_2);
@@ -42,7 +43,6 @@ public class Procedimiento {
         for (int renglon = 0; renglon < matriz.length; renglon++) {
             for (int columna = 0; columna < matriz.length; columna++) {
                 matriz[renglon][columna] = (Integer) tablaOriginal.getValueAt(renglon, columna);
-
             }
         }
         builder.append(Instrucciones.MATRIZ_ORIGINAL);
@@ -76,7 +76,7 @@ public class Procedimiento {
                     valorPequeño = matriz[renglon][columna];
                 }
             }
-            builder.append("Columna: ").append((columna+1)).append(" valor más pequeño: ").append(valorPequeño).append("\n");
+            builder.append("Columna: ").append((columna + 1)).append(" valor más pequeño: ").append(valorPequeño).append("\n");
             for (int renglon = 0; renglon < matriz.length; renglon++) {
                 matriz[renglon][columna] = matriz[renglon][columna] - valorPequeño;
             }
@@ -99,7 +99,7 @@ public class Procedimiento {
                     valorPequeño = matriz[renglon][columna];
                 }
             }
-            builder.append("Renglón: ").append((renglon+1)).append(" valor más pequeño: ").append(valorPequeño).append("\n");
+            builder.append("Renglón: ").append((renglon + 1)).append(" valor más pequeño: ").append(valorPequeño).append("\n");
             for (int columna = 0; columna < matriz.length; columna++) {
                 matriz[renglon][columna] = matriz[renglon][columna] - valorPequeño;
             }
@@ -123,7 +123,6 @@ public class Procedimiento {
             }
         }
         int ceros;
-
         // a) deben elegirse los 0’s que sean únicos en renglón y marcarlos, los 0’s restantes de la columna se eliminan
         for (int renglon = 0; renglon < matriz.length; renglon++) {
             ceros = 0;
@@ -153,9 +152,7 @@ public class Procedimiento {
                 }
             }
         }
-
         imprimirDatos(Instrucciones.IMPRIMIR_DATOS_A, false, true);
-
         // b) deben seleccionarse los 0’s que sean únicos en columna y marcarlos, los restantes 0’s del renglón se eliminan
         for (int columna = 0; columna < matriz.length; columna++) {
             ceros = 0;
@@ -250,13 +247,11 @@ public class Procedimiento {
                 renglonesLinea.put(renglon, "d");
             }
         }
-
         for (int columna = 0; columna < matriz.length; columna++) {
             if (columnasTachadas.get(columna) != null) {
                 columnasLinea.put(columna, "d");
             }
         }
-
         // establecer cruce
         for (Integer renglon : renglonesLinea.keySet()) {
             for (Integer columna : columnasLinea.keySet()) {
@@ -264,7 +259,6 @@ public class Procedimiento {
             }
         }
         imprimirTachadosLineas(Instrucciones.IMPRIMIR_TACHADOS_D, "d");
-
     }
 
     private void pasoCinco() {
@@ -279,7 +273,6 @@ public class Procedimiento {
             builder.append(Instrucciones.SOLUCION_PARCIAL);
             return;
         }
-
         for (int renglon = 0; renglon < matriz.length; renglon++) {
             for (int columna = 0; columna < matriz.length; columna++) {
                 DatoMatrizTO dm = mapaMatriz.get(renglon + "|" + columna);
@@ -288,17 +281,16 @@ public class Procedimiento {
                 }
             }
         }
-
         int numeroSeleccionados = 0;
         for (DatoMatrizTO value : mapaMatriz.values()) {
             if (value.isSeleccionado()) {
                 numeroSeleccionados++;
             }
         }
-
         if (numeroSeleccionados == numero) {
 //            JOptionPane.showMessageDialog(tablaResultado, "SOLUCIÓN TOTAL","",JOptionPane.INFORMATION_MESSAGE);
             builder.append(Instrucciones.SOLUCION_TOTAL);
+            txtResultados.setText(txtResultados.getText() + Instrucciones.SOLUCION_TOTAL_RESULTADO.concat("\n"));
             imprimirDatos(Instrucciones.MATRIZ_FINAL, false, true);
             generarResultado();
             return;
@@ -359,8 +351,8 @@ public class Procedimiento {
         builder.append(Instrucciones.SUBTITULO_1).append(contador).append(Instrucciones.SUBTITULO_2);
         repetirProceso();
     }
-    
-    private void repetirProceso(){
+
+    private void repetirProceso() {
         pasoTres();
         pasoCuatro();
         pasoCinco();
@@ -378,8 +370,12 @@ public class Procedimiento {
                     sb.append("\n");
                 }
             }
-            txtResultados.setText(sb.toString());
         }
+         if (sb.toString().isEmpty()) {
+                txtResultados.setText(Instrucciones.SIN_SOLUCION.concat(Instrucciones.REVISAR_PROCEDIMIENTO));
+            } else {
+                txtResultados.setText(txtResultados.getText() + sb.toString());
+            }
     }
 
     private void generarResultado() {

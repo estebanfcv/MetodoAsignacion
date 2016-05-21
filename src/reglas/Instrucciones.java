@@ -33,10 +33,13 @@ public class Instrucciones {
             + "donde esté el 0 eliminado o tachado identifica columnas y se marcan.\n";
     public static final String IMPRIMIR_TACHADOS_D = "d) Finalmente,"
             + " las líneas deben trazarse en el o los renglones NO MARCADOS y columnas MARCADAS.\n";
+    public static final String SOLUCION_TOTAL_RESULTADO = "\n==============================SOLUCIÓN TOTAL==============================\n";
     public static final String SOLUCION_PARCIAL = "\n======================================SOLUCIÓN PARCIAL======================================\n";
-    public static final String SOLUCION_TOTAL = "\n======================================SOLUCIÓN TOTAL======================================\n";
+    public static final String SOLUCION_TOTAL= "\n======================================SOLUCIÓN TOTAL======================================\n";
+    public static final String SIN_SOLUCION="\n================================SIN SOLUCIÓN================================\n";
     public static final String R_C_TACHADAS_A = "a) Seleccionar el valor más pequeño el cual no debe estar cruzado por ninguna línea.\n";
     public static final String R_C_TACHADAS_B = "b) Este valor debe restarse de todos los valores que no están cruzados por ninguna línea.\n";
     public static final String R_C_TACHADAS_C = "c) después hay que sumar esta cantidad a todos los valores situados en la intersección de líneas.\n";
+    public static final String REVISAR_PROCEDIMIENTO= "\nRevisar el procedimiento para más información.";
 
 }
