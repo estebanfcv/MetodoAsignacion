@@ -1,5 +1,6 @@
 package vista;
 
+import java.awt.Insets;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
@@ -44,7 +45,7 @@ public class Pantalla extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         resultados = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
+        botonProcedimiento = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaOriginal = new javax.swing.JTable();
         botonLimpiar = new javax.swing.JButton();
@@ -52,8 +53,8 @@ public class Pantalla extends javax.swing.JFrame {
         jLabel3.setText("jLabel3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Método asignación");
-        setPreferredSize(new java.awt.Dimension(786, 700));
+        setTitle("Método de asignación");
+        setPreferredSize(new java.awt.Dimension(786, 630));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -76,6 +77,8 @@ public class Pantalla extends javax.swing.JFrame {
             }
         });
 
+        panelOriginal.setLayout(null);
+
         tablaResultados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -90,8 +93,13 @@ public class Pantalla extends javax.swing.JFrame {
         tablaResultados.setEnabled(false);
         jScrollPane2.setViewportView(tablaResultados);
 
+        panelOriginal.add(jScrollPane2);
+        jScrollPane2.setBounds(12, 12, 748, 193);
+
         jLabel2.setForeground(java.awt.Color.black);
         jLabel2.setText("0's seleccionados");
+        panelOriginal.add(jLabel2);
+        jLabel2.setBounds(12, 214, 125, 15);
 
         jPanel1.setBackground(java.awt.Color.green);
         jPanel1.setPreferredSize(new java.awt.Dimension(22, 22));
@@ -107,7 +115,12 @@ public class Pantalla extends javax.swing.JFrame {
             .addGap(0, 22, Short.MAX_VALUE)
         );
 
+        panelOriginal.add(jPanel1);
+        jPanel1.setBounds(149, 214, 22, 22);
+
         jLabel4.setText("0's eliminados");
+        panelOriginal.add(jLabel4);
+        jLabel4.setBounds(199, 214, 101, 15);
 
         jPanel2.setBackground(java.awt.Color.red);
         jPanel2.setPreferredSize(new java.awt.Dimension(22, 22));
@@ -123,56 +136,24 @@ public class Pantalla extends javax.swing.JFrame {
             .addGap(0, 22, Short.MAX_VALUE)
         );
 
+        panelOriginal.add(jPanel2);
+        jPanel2.setBounds(318, 214, 22, 22);
+
         resultados.setColumns(20);
         resultados.setRows(5);
         jScrollPane3.setViewportView(resultados);
 
-        jButton1.setText("Ver procedimiento");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        panelOriginal.add(jScrollPane3);
+        jScrollPane3.setBounds(12, 242, 748, 100);
+
+        botonProcedimiento.setText("Ver procedimiento");
+        botonProcedimiento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                botonProcedimientoActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout panelOriginalLayout = new javax.swing.GroupLayout(panelOriginal);
-        panelOriginal.setLayout(panelOriginalLayout);
-        panelOriginalLayout.setHorizontalGroup(
-            panelOriginalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelOriginalLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelOriginalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
-                    .addGroup(panelOriginalLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39)
-                        .addComponent(jButton1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane3))
-                .addContainerGap())
-        );
-        panelOriginalLayout.setVerticalGroup(
-            panelOriginalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelOriginalLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(panelOriginalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelOriginalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel2)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel4)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(70, 70, 70)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        panelOriginal.add(botonProcedimiento);
+        botonProcedimiento.setBounds(379, 211, 164, 25);
 
         tablaOriginal.setModel(new javax.swing.table.DefaultTableModel(
             new Integer [][] {
@@ -200,42 +181,40 @@ public class Pantalla extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelOriginal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(281, 281, 281)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(spinner, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 754, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(258, 258, 258)
                 .addComponent(botonCalcular)
                 .addGap(69, 69, 69)
-                .addComponent(botonLimpiar)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(281, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(spinner, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(129, 129, 129))
+                .addComponent(botonLimpiar))
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1)
-                .addContainerGap())
+                .addGap(12, 12, 12)
+                .addComponent(panelOriginal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(jLabel1))
                     .addComponent(spinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(6, 6, 6)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(botonCalcular)
                     .addComponent(botonLimpiar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelOriginal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(6, 6, 6)
+                .addComponent(panelOriginal, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE))
         );
 
         pack();
@@ -244,6 +223,8 @@ public class Pantalla extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         panelOriginal.setVisible(false);
         resultados.setEditable(false);
+        System.out.println("los margenes son: "+Util.debugImprimirContenidoObjecto(resultados.getMargin()));
+          resultados.setMargin(new Insets(-5, 0, -5, 0));
     }//GEN-LAST:event_formWindowOpened
 
     private void botonCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCalcularActionPerformed
@@ -268,10 +249,6 @@ public class Pantalla extends javax.swing.JFrame {
         }
         DefaultTableModel dtm = new DefaultTableModel(datos, columnas);
         tablaResultados.setModel(dtm);
-        spinner.setEnabled(false);
-        tablaOriginal.setEnabled(false);
-        botonCalcular.setEnabled(false);
-
         procedimiento = new Procedimiento(tablaOriginal, tablaResultados, resultados);
 
     }//GEN-LAST:event_botonCalcularActionPerformed
@@ -302,12 +279,12 @@ public class Pantalla extends javax.swing.JFrame {
         inicializarTabla();
     }//GEN-LAST:event_botonLimpiarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void botonProcedimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonProcedimientoActionPerformed
         // TODO add your handling code here:
         PantallaProcedimiento pantallaProcedimiento = new PantallaProcedimiento();
         pantallaProcedimiento.setVisible(true);
         pantallaProcedimiento.getTxtProcedimiento().setText(procedimiento.getPasos());
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_botonProcedimientoActionPerformed
 
     private boolean validarDatos() {
         for (int renglon = 0; renglon < tablaOriginal.getRowCount(); renglon++) {
@@ -378,7 +355,7 @@ public class Pantalla extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonCalcular;
     private javax.swing.JButton botonLimpiar;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton botonProcedimiento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

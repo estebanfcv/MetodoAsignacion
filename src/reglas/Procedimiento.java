@@ -22,20 +22,21 @@ public class Procedimiento {
     private JTextArea txtResultados;
     private Integer[][] matriz;
     private int numero;
-    private Map<Integer, Integer> renglonesTachados;
-    private Map<Integer, Integer> columnasTachadas;
-    private Map<Integer, Integer> renglonesLinea;
-    private Map<Integer, Integer> columnasLinea;
+    private Map<Integer, String> renglonesTachados;
+    private Map<Integer, String> columnasTachadas;
+    private Map<Integer, String> renglonesLinea;
+    private Map<Integer, String> columnasLinea;
     private int contador;
     private StringBuilder builder;
+    private static final String FORMATO = "%3d   ";
 
     public Procedimiento(JTable tablaOriginal, JTable tablaResultado, JTextArea txtResultados) {
         this.tablaOriginal = tablaOriginal;
         this.tablaResultado = tablaResultado;
         this.txtResultados = txtResultados;
         contador = 1;
-        builder = new StringBuilder("======================================Procedimiento======================================\n\n");
-        builder.append("\n\n======================================Corrida: ").append(contador).append("======================================\n\n");
+        builder = new StringBuilder(Instrucciones.TITULO);
+        builder.append(Instrucciones.SUBTITULO_1).append(contador).append(Instrucciones.SUBTITULO_2);
         numero = tablaOriginal.getRowCount();
         matriz = new Integer[numero][numero];
         for (int renglon = 0; renglon < matriz.length; renglon++) {
@@ -44,10 +45,10 @@ public class Procedimiento {
 
             }
         }
-        builder.append("Matriz Original\n\n");
+        builder.append(Instrucciones.MATRIZ_ORIGINAL);
         for (int renglon = 0; renglon < matriz.length; renglon++) {
             for (int columna = 0; columna < matriz.length; columna++) {
-                builder.append(String.format("%3d   ", matriz[renglon][columna]));
+                builder.append(String.format(FORMATO, matriz[renglon][columna]));
             }
             builder.append("\n\n");
         }
@@ -62,6 +63,7 @@ public class Procedimiento {
 
     private void pasoUno() {
         //Restar el valor más pequeño de cada uno de los valores de la columna y de si mismo.
+        builder.append(Instrucciones.PASO_1);
         int valorPequeño = 0;
         boolean firstTime;
         for (int columna = 0; columna < matriz.length; columna++) {
@@ -74,15 +76,17 @@ public class Procedimiento {
                     valorPequeño = matriz[renglon][columna];
                 }
             }
+            builder.append("Columna: ").append((columna+1)).append(" valor más pequeño: ").append(valorPequeño).append("\n");
             for (int renglon = 0; renglon < matriz.length; renglon++) {
                 matriz[renglon][columna] = matriz[renglon][columna] - valorPequeño;
             }
         }
-        imprimirDatos("PASO 1: \n" + "Restar el valor más pequeño de cada uno de los valores de la columna y de si mismo.\n", true, false);
+        imprimirDatos("\n", true, false);
     }
 
     private void pasoDos() {
         // Restar el valor más pequeño de cada renglón de los demás valores de ese renglón y de si mismo.
+        builder.append(Instrucciones.PASO_2);
         int valorPequeño = 0;
         boolean firstTime;
         for (int renglon = 0; renglon < matriz.length; renglon++) {
@@ -95,15 +99,16 @@ public class Procedimiento {
                     valorPequeño = matriz[renglon][columna];
                 }
             }
+            builder.append("Renglón: ").append((renglon+1)).append(" valor más pequeño: ").append(valorPequeño).append("\n");
             for (int columna = 0; columna < matriz.length; columna++) {
                 matriz[renglon][columna] = matriz[renglon][columna] - valorPequeño;
             }
         }
-        imprimirDatos("PASO 2: \n" + "Restar el valor más pequeño de cada renglón de los demás valores de ese renglón y de si mismo.\n", true, false);
+        imprimirDatos("\n", true, false);
     }
 
     private void pasoTres() {
-        builder.append("PASO 3: \n").append("Deben escogerse los 0’s que sean únicos tanto en renglón como en columna y marcarlos\n");
+        builder.append(Instrucciones.PASO_3);
         //   deben escogerse los 0’s que sean únicos tanto en renglón como en columna y marcarlos
         mapaMatriz = new LinkedHashMap<>();
         for (int renglon = 0; renglon < matriz.length; renglon++) {
@@ -149,7 +154,7 @@ public class Procedimiento {
             }
         }
 
-        imprimirDatos("a) Deben elegirse los 0’s que sean únicos en renglón y marcarlos, los 0’s restantes de la columna se eliminan.\n", false, true);
+        imprimirDatos(Instrucciones.IMPRIMIR_DATOS_A, false, true);
 
         // b) deben seleccionarse los 0’s que sean únicos en columna y marcarlos, los restantes 0’s del renglón se eliminan
         for (int columna = 0; columna < matriz.length; columna++) {
@@ -180,15 +185,12 @@ public class Procedimiento {
                 }
             }
         }
-        imprimirDatos("b) Deben seleccionarse los 0’s que sean únicos en columna y marcarlos, los restantes 0’s del renglón se eliminan\n", false, true);
+        imprimirDatos(Instrucciones.IMPRIMIR_DATOS_B, false, true);
     }
 
     private void pasoCuatro() {
-        builder.append("PASO 4:\n").append("Verificar la optimalidad trazando el mímino número de líneas que pueden pasar a través de todos los 0’s.\n");
-        renglonesTachados = new LinkedHashMap<>();
-        columnasTachadas = new LinkedHashMap<>();
-        renglonesLinea = new LinkedHashMap<>();
-        columnasLinea = new LinkedHashMap<>();
+        builder.append(Instrucciones.PASO_4);
+        inicializarMapas();
         boolean cerosMarcados;
         List<DatoMatrizTO> listaRenglon;
         //a) deben marcarse el renglon o renglones que tengan exclusivamente uno o varios 0’s eliminados o tachados
@@ -210,44 +212,48 @@ public class Procedimiento {
                     }
                 }
                 if (!cerosMarcados) {
-                    renglonesTachados.put(renglon, renglon);
+                    if (renglonesTachados.get(renglon) == null) {
+                        renglonesTachados.put(renglon, "a");
+                    }
                 }
             }
         }
 
-        imprimirTachadosLineas("a) Deben marcarse el renglón o renglones que tengan exclusivamente uno o varios 0’s eliminados o tachados.\n", "a");
+        imprimirTachadosLineas(Instrucciones.IMPRIMIR_TACHADOS_A, "a");
         //b) marcardo el renglón o renglones del punto a) se revisan dichos renglones y
         //donde esté el 0 eliminado o tachado identifica columnas y se marcan
         for (Integer renglon : renglonesTachados.keySet()) {
             for (int columna = 0; columna < matriz.length; columna++) {
                 if (mapaMatriz.get(renglon + "|" + columna).isEliminado()) {
-                    columnasTachadas.put(columna, columna);
+                    if (columnasTachadas.get(columna) == null) {
+                        columnasTachadas.put(columna, "b");
+                    }
                 }
             }
         }
-        imprimirTachadosLineas("b) Marcardo el renglón o renglones del punto a) se revisan dichos renglones y "
-                + "donde esté el 0 eliminado o tachado identifica columnas y se marcan\n", "b");
+        imprimirTachadosLineas(Instrucciones.IMPRIMIR_TACHADOS_B, "b");
         //c) marcada la columna o columnas se revisan y en la posición donde se ubique el 0 seleccionado, 
         //hay que identificar el o los renglones y se marcan
         for (int renglon = 0; renglon < matriz.length; renglon++) {
             for (Integer columna : columnasTachadas.keySet()) {
                 if (mapaMatriz.get(renglon + "|" + columna).isCero() && mapaMatriz.get(renglon + "|" + columna).isSeleccionado()) {
-                    renglonesTachados.put(renglon, renglon);
+                    if (renglonesTachados.get(renglon) == null) {
+                        renglonesTachados.put(renglon, "c");
+                    }
                 }
             }
         }
-        imprimirTachadosLineas("c) Marcada la columna o columnas se revisan y en la posición donde se ubique el 0 seleccionado, "
-                + "donde esté el 0 eliminado o tachado identifica columnas y se marcan\n", "c");
+        imprimirTachadosLineas(Instrucciones.IMPRIMIR_TACHADOS_C, "c");
         //d) finalmente, las líneas deben trazarse en el o los renglones no marcados y columnas marcadas.
         for (int renglon = 0; renglon < matriz.length; renglon++) {
             if (renglonesTachados.get(renglon) == null) {
-                renglonesLinea.put(renglon, renglon);
+                renglonesLinea.put(renglon, "d");
             }
         }
 
         for (int columna = 0; columna < matriz.length; columna++) {
             if (columnasTachadas.get(columna) != null) {
-                columnasLinea.put(columna, columna);
+                columnasLinea.put(columna, "d");
             }
         }
 
@@ -257,7 +263,7 @@ public class Procedimiento {
                 mapaMatriz.get(renglon + "|" + columna).setCruzado(true);
             }
         }
-        imprimirTachadosLineas("d) Finalmente, las líneas deben trazarse en el o los renglones NO MARCADOS y columnas MARCADAS.\n", "d");
+        imprimirTachadosLineas(Instrucciones.IMPRIMIR_TACHADOS_D, "d");
 
     }
 
@@ -265,13 +271,12 @@ public class Procedimiento {
         //despues de trazar el número mínimo de líneas se hace la prueba de optimalidad, 
         //si el número de lineas es igual a “n” que representa el número de renglones o columnas,
         //la solución es la óptima.
-        builder.append("PASO 5:\n").append("Prueba de optimalidad:\n"
-                + "Si el número de líneas es igual a “n” que representa el número de renglones o columnas, la solución es la óptima\n");
+        builder.append(Instrucciones.PASO_5);
         if (contador >= 100) {
             generarResultado();
             pintarMatriz();
 //            JOptionPane.showMessageDialog(tablaResultado, "Solución parcial","",JOptionPane.WARNING_MESSAGE);
-            builder.append("\n======================================SOLUCIÓN PARCIAL======================================\n");
+            builder.append(Instrucciones.SOLUCION_PARCIAL);
             return;
         }
 
@@ -293,13 +298,14 @@ public class Procedimiento {
 
         if (numeroSeleccionados == numero) {
 //            JOptionPane.showMessageDialog(tablaResultado, "SOLUCIÓN TOTAL","",JOptionPane.INFORMATION_MESSAGE);
-            builder.append("\n======================================SOLUCIÓN TOTAL======================================\n");
-            imprimirDatos("Matriz Final\n", false, true);
+            builder.append(Instrucciones.SOLUCION_TOTAL);
+            imprimirDatos(Instrucciones.MATRIZ_FINAL, false, true);
             generarResultado();
             return;
         }
         DatoMatrizTO dm = new DatoMatrizTO();
         if (numeroSeleccionados != numero) {
+            builder.append(Instrucciones.PASO_51);
             //seleccionar el valor más pequeño el cual no debe estar cruzado por ninguna línea,
             int valorPequeño = 0;
             boolean firstTime = true;
@@ -323,6 +329,7 @@ public class Procedimiento {
 
             }
             //este valor debe restarse de todos los valores que no están cruzados por ninguna linea,
+            imprimirRenglonesColumnasTachadas(Instrucciones.R_C_TACHADAS_A, dm);
             for (int renglon = 0; renglon < matriz.length; renglon++) {
                 if (renglonesLinea.get(renglon) != null) {
                     continue;
@@ -332,25 +339,28 @@ public class Procedimiento {
                         continue;
                     }
                     matriz[renglon][columna] = matriz[renglon][columna] - valorPequeño;
-
                 }
             }
+            dm.setValor(dm.getValor() - valorPequeño);
             //despues hay que sumar esta cantidad a todos los valores situados en la intersección de lineas, 
-            imprimirRenglonesColumnasTachadas("Si el número de líneas es diferente a “n”:\n"
-                    + "a) Seleccionar el valor más pequeño el cual no debe estar cruzado por ninguna línea.\n"
-                    + "b) Este valor debe restarse de todos los valores que no están cruzados por ninguna línea.\n", dm);
+            //donde los valores cruzados por una linea horizontal o vertical permanecen inalterados 
+            imprimirRenglonesColumnasTachadas(Instrucciones.R_C_TACHADAS_B, dm);
             for (int renglon = 0; renglon < matriz.length; renglon++) {
                 for (int columna = 0; columna < matriz.length; columna++) {
                     if (mapaMatriz.get(renglon + "|" + columna).isCruzado()) {
                         matriz[renglon][columna] = matriz[renglon][columna] + valorPequeño;
+                        mapaMatriz.get(renglon + "|" + columna).setValor(mapaMatriz.get(renglon + "|" + columna).getValor() + valorPequeño);
                     }
                 }
             }
-            imprimirRenglonesColumnasTachadas("c) después hay que sumar esta cantidad a todos los valores situados en la intersección de líneas\n", dm);
+            imprimirRenglonesColumnasTachadas(Instrucciones.R_C_TACHADAS_C, dm);
         }
         contador++;
-        builder.append("\n\n======================================Corrida: ").append(contador).append("======================================\n\n");
-        //donde los valores cruzados por una linea horizontal o vertical permanecen inalterados 
+        builder.append(Instrucciones.SUBTITULO_1).append(contador).append(Instrucciones.SUBTITULO_2);
+        repetirProceso();
+    }
+    
+    private void repetirProceso(){
         pasoTres();
         pasoCuatro();
         pasoCinco();
@@ -386,20 +396,16 @@ public class Procedimiento {
 
     private void imprimirDatos(String comentario, boolean isMatriz, boolean mostrarSimbologia) {
         builder.append(comentario).append("\n");
-        String simbologia;
-        simbologia = mostrarSimbologia ? ("\nDonde:\n"
-                + "\n[0] cero seleccionado\n"
-                + "*0* cero eliminado\n") : "";
-        builder.append(simbologia).append("\n");
+        builder.append(mostrarSimbologia ? (Instrucciones.SIMBOLOGIA_CEROS) : "").append("\n");
         for (int renglon = 0; renglon < matriz.length; renglon++) {
             for (int columna = 0; columna < matriz.length; columna++) {
                 if (isMatriz) {
-                    builder.append(String.format("%3d   ", matriz[renglon][columna]));
+                    builder.append(String.format(FORMATO, matriz[renglon][columna]));
                 } else {
                     String valorTemp;
                     DatoMatrizTO dm = mapaMatriz.get(renglon + "|" + columna);
                     if (!dm.isCero()) {
-                        builder.append(String.format("%3d   ", matriz[renglon][columna]));
+                        builder.append(String.format(FORMATO, matriz[renglon][columna]));
                     } else if (dm.isSeleccionado()) {
                         valorTemp = "[" + dm.getValor() + "]";
                         builder.append("   ").append(valorTemp);
@@ -407,7 +413,7 @@ public class Procedimiento {
                         valorTemp = "*" + dm.getValor() + "*";
                         builder.append("   ").append(valorTemp);
                     } else {
-                        builder.append(String.format("%3d   ", matriz[renglon][columna]));
+                        builder.append(String.format(FORMATO, matriz[renglon][columna]));
                     }
                 }
             }
@@ -421,29 +427,29 @@ public class Procedimiento {
         switch (letra) {
             case "a":
                 for (Integer rt : renglonesTachados.keySet()) {
-                    builder.append("(").append(letra).append(") Renglón ").append((rt + 1)).append(" (").append(letra).append(")").append("\n");
+                    builder.append("(").append(renglonesTachados.get(rt)).append(") Renglón ").append((rt + 1)).append(" (").append(renglonesTachados.get(rt)).append(")").append("\n");
                 }
                 builder.append("\n");
                 break;
             case "b":
                 for (Integer ct : columnasTachadas.keySet()) {
-                    builder.append("(").append(letra).append(") Columna ").append((ct + 1)).append(" (").append(letra).append(")").append("\n");
+                    builder.append("(").append(columnasTachadas.get(ct)).append(") Columna ").append((ct + 1)).append(" (").append(columnasTachadas.get(ct)).append(")").append("\n");
                 }
                 builder.append("\n");
                 break;
             case "c":
                 for (Integer rt : renglonesTachados.keySet()) {
-                    builder.append("(").append(letra).append(") Renglón ").append((rt + 1)).append(" (").append(letra).append(")").append("\n");
+                    builder.append("(").append(renglonesTachados.get(rt)).append(") Renglón ").append((rt + 1)).append(" (").append(renglonesTachados.get(rt)).append(")").append("\n");
                 }
                 builder.append("\n");
                 break;
             default:
                 for (Integer rl : renglonesLinea.keySet()) {
-                    builder.append("(").append(letra).append(") Renglón línea ").append((rl + 1)).append(" (").append(letra).append(")").append("\n");
+                    builder.append("(").append(renglonesLinea.get(rl)).append(") Renglón línea ").append((rl + 1)).append(" (").append(renglonesLinea.get(rl)).append(")").append("\n");
                 }
                 builder.append("\n");
                 for (Integer cl : columnasLinea.keySet()) {
-                    builder.append("(").append(letra).append(") Columna línea ").append((cl + 1)).append(" (").append(letra).append(")").append("\n");
+                    builder.append("(").append(columnasLinea.get(cl)).append(") Columna línea ").append((cl + 1)).append(" (").append(columnasLinea.get(cl)).append(")").append("\n");
                 }
                 builder.append("\n");
         }
@@ -452,12 +458,7 @@ public class Procedimiento {
 
     private void imprimirRenglonesColumnasTachadas(String comentario, DatoMatrizTO datoMatriz) {
         builder.append(comentario).append("\n");
-        String simbologia;
-        simbologia = "\nDonde:\n"
-                + "\n-#- Número en línea\n"
-                + "+#+ Número en cruce\n"
-                + ">1< Número menor\n";
-        builder.append(simbologia).append("\n");
+        builder.append(Instrucciones.SIMBOLOGIA_NUMEROS).append("\n");
         for (int renglon = 0; renglon < matriz.length; renglon++) {
             for (int columna = 0; columna < matriz.length; columna++) {
                 String valorTemp;
@@ -472,7 +473,7 @@ public class Procedimiento {
                     valorTemp = "-" + dm.getValor() + "-";
                     builder.append("   ").append(valorTemp);
                 } else {
-                    builder.append(String.format("%3d   ", matriz[renglon][columna]));
+                    builder.append(String.format(FORMATO, matriz[renglon][columna]));
                 }
             }
             builder.append("\n");
@@ -484,7 +485,7 @@ public class Procedimiento {
         StringBuilder sb = new StringBuilder();
         for (int renglon = 0; renglon < matriz.length; renglon++) {
             for (int columna = 0; columna < matriz.length; columna++) {
-                sb.append(String.format("%3d   ", matriz[renglon][columna]));
+                sb.append(String.format(FORMATO, matriz[renglon][columna]));
             }
             sb.append("\n");
         }
@@ -494,6 +495,13 @@ public class Procedimiento {
     private void pintarMatriz() {
         TableCellRenderer renderer = new RenderCelda(mapaMatriz);
         tablaResultado.setDefaultRenderer(Object.class, renderer);
+    }
+
+    private void inicializarMapas() {
+        renglonesTachados = new LinkedHashMap<>();
+        columnasTachadas = new LinkedHashMap<>();
+        renglonesLinea = new LinkedHashMap<>();
+        columnasLinea = new LinkedHashMap<>();
     }
 
     public String getPasos() {
