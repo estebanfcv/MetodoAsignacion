@@ -20,7 +20,7 @@ public class PantallaProcedimiento extends javax.swing.JFrame {
     public PantallaProcedimiento() {
         initComponents();
         txtProcedimiento.setEditable(false);
-        DefaultCaret caret = (DefaultCaret) txtProcedimiento.getCaret(); // ←
+        DefaultCaret caret = (DefaultCaret) txtProcedimiento.getCaret();
         caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
     }
 

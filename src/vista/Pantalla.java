@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.DefaultCaret;
 import reglas.Procedimiento;
 import util.Util;
 
@@ -223,14 +224,13 @@ public class Pantalla extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         panelOriginal.setVisible(false);
         resultados.setEditable(false);
-          resultados.setMargin(new Insets(-5, 0, -5, 0));
+        resultados.setMargin(new Insets(-5, 0, -5, 0));
+        DefaultCaret caret = (DefaultCaret) resultados.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
     }//GEN-LAST:event_formWindowOpened
 
     private void botonCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCalcularActionPerformed
-        if (!validarDatos()) {
-            JOptionPane.showMessageDialog(rootPane, "Fvor de ingresar solamente valores númericos mayores a 0", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+
         panelOriginal.setVisible(true);
         int nuevoNumero = (int) spinner.getValue();
 
@@ -285,18 +285,6 @@ public class Pantalla extends javax.swing.JFrame {
         pantallaProcedimiento.setVisible(true);
         pantallaProcedimiento.getTxtProcedimiento().setText(procedimiento.getPasos());
     }//GEN-LAST:event_botonProcedimientoActionPerformed
-
-    private boolean validarDatos() {
-        for (int renglon = 0; renglon < tablaOriginal.getRowCount(); renglon++) {
-            for (int columna = 0; columna < tablaOriginal.getColumnCount(); columna++) {
-                Integer valor = tablaOriginal.getValueAt(renglon, columna) == null ? 0 : (Integer) tablaOriginal.getValueAt(renglon, columna);
-                if (valor < 0) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
 
     private void inicializarTabla() {
         int nuevoNumero = (int) spinner.getValue();
