@@ -34,6 +34,8 @@ public class Pantalla extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel3 = new javax.swing.JLabel();
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         spinner = new JSpinner(new SpinnerNumberModel(1, 1, 10, 1));
         botonCalcular = new javax.swing.JButton();
@@ -47,6 +49,8 @@ public class Pantalla extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         resultados = new javax.swing.JTextArea();
         botonProcedimiento = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        txtSuma = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaOriginal = new javax.swing.JTable();
         botonLimpiar = new javax.swing.JButton();
@@ -78,8 +82,6 @@ public class Pantalla extends javax.swing.JFrame {
             }
         });
 
-        panelOriginal.setLayout(null);
-
         tablaResultados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -94,13 +96,7 @@ public class Pantalla extends javax.swing.JFrame {
         tablaResultados.setEnabled(false);
         jScrollPane2.setViewportView(tablaResultados);
 
-        panelOriginal.add(jScrollPane2);
-        jScrollPane2.setBounds(12, 12, 748, 193);
-
-        jLabel2.setForeground(java.awt.Color.black);
         jLabel2.setText("0's seleccionados");
-        panelOriginal.add(jLabel2);
-        jLabel2.setBounds(12, 214, 125, 15);
 
         jPanel1.setBackground(java.awt.Color.green);
         jPanel1.setPreferredSize(new java.awt.Dimension(22, 22));
@@ -116,12 +112,7 @@ public class Pantalla extends javax.swing.JFrame {
             .addGap(0, 22, Short.MAX_VALUE)
         );
 
-        panelOriginal.add(jPanel1);
-        jPanel1.setBounds(149, 214, 22, 22);
-
         jLabel4.setText("0's eliminados");
-        panelOriginal.add(jLabel4);
-        jLabel4.setBounds(199, 214, 101, 15);
 
         jPanel2.setBackground(java.awt.Color.red);
         jPanel2.setPreferredSize(new java.awt.Dimension(22, 22));
@@ -137,15 +128,9 @@ public class Pantalla extends javax.swing.JFrame {
             .addGap(0, 22, Short.MAX_VALUE)
         );
 
-        panelOriginal.add(jPanel2);
-        jPanel2.setBounds(318, 214, 22, 22);
-
         resultados.setColumns(20);
         resultados.setRows(5);
         jScrollPane3.setViewportView(resultados);
-
-        panelOriginal.add(jScrollPane3);
-        jScrollPane3.setBounds(12, 242, 748, 100);
 
         botonProcedimiento.setText("Ver procedimiento");
         botonProcedimiento.addActionListener(new java.awt.event.ActionListener() {
@@ -153,8 +138,61 @@ public class Pantalla extends javax.swing.JFrame {
                 botonProcedimientoActionPerformed(evt);
             }
         });
-        panelOriginal.add(botonProcedimiento);
-        botonProcedimiento.setBounds(379, 211, 164, 25);
+
+        jLabel5.setText("Total");
+
+        javax.swing.GroupLayout panelOriginalLayout = new javax.swing.GroupLayout(panelOriginal);
+        panelOriginal.setLayout(panelOriginalLayout);
+        panelOriginalLayout.setHorizontalGroup(
+            panelOriginalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelOriginalLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(panelOriginalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 748, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelOriginalLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(12, 12, 12)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)
+                        .addComponent(botonProcedimiento)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtSuma)
+                        .addContainerGap())
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 748, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+        panelOriginalLayout.setVerticalGroup(
+            panelOriginalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelOriginalLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelOriginalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelOriginalLayout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(jLabel2))
+                    .addGroup(panelOriginalLayout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelOriginalLayout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(jLabel4))
+                    .addGroup(panelOriginalLayout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelOriginalLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(panelOriginalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(botonProcedimiento)
+                            .addComponent(jLabel5)
+                            .addComponent(txtSuma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(6, 6, 6)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         tablaOriginal.setModel(new javax.swing.table.DefaultTableModel(
             new Integer [][] {
@@ -215,7 +253,7 @@ public class Pantalla extends javax.swing.JFrame {
                     .addComponent(botonCalcular)
                     .addComponent(botonLimpiar))
                 .addGap(6, 6, 6)
-                .addComponent(panelOriginal, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE))
+                .addComponent(panelOriginal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -224,6 +262,7 @@ public class Pantalla extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         panelOriginal.setVisible(false);
         resultados.setEditable(false);
+        txtSuma.setEditable(false);
         resultados.setMargin(new Insets(-5, 0, -5, 0));
         DefaultCaret caret = (DefaultCaret) resultados.getCaret();
         caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
@@ -249,7 +288,7 @@ public class Pantalla extends javax.swing.JFrame {
         DefaultTableModel dtm = new DefaultTableModel(datos, columnas);
         tablaResultados.setModel(dtm);
         resultados.setText("");
-        procedimiento = new Procedimiento(tablaOriginal, tablaResultados, resultados);
+        procedimiento = new Procedimiento(tablaOriginal, tablaResultados, resultados,txtSuma);
 
     }//GEN-LAST:event_botonCalcularActionPerformed
 
@@ -276,6 +315,7 @@ public class Pantalla extends javax.swing.JFrame {
         tablaOriginal.setEnabled(true);
         botonCalcular.setEnabled(true);
         resultados.setText("");
+        txtSuma.setText("");
         inicializarTabla();
     }//GEN-LAST:event_botonLimpiarActionPerformed
 
@@ -344,10 +384,13 @@ public class Pantalla extends javax.swing.JFrame {
     private javax.swing.JButton botonCalcular;
     private javax.swing.JButton botonLimpiar;
     private javax.swing.JButton botonProcedimiento;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -358,5 +401,6 @@ public class Pantalla extends javax.swing.JFrame {
     private javax.swing.JSpinner spinner;
     private javax.swing.JTable tablaOriginal;
     private javax.swing.JTable tablaResultados;
+    private javax.swing.JTextField txtSuma;
     // End of variables declaration//GEN-END:variables
 }

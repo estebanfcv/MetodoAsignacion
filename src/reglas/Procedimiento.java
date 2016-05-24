@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.table.TableCellRenderer;
 import to.DatoMatrizTO;
 import vista.RenderCelda;
@@ -20,6 +21,7 @@ public class Procedimiento {
     private JTable tablaOriginal;
     private JTable tablaResultado;
     private JTextArea txtResultados;
+    private JTextField txtSuma;
     private Integer[][] matriz;
     private int numero;
     private Map<Integer, String> renglonesTachados;
@@ -30,10 +32,11 @@ public class Procedimiento {
     private StringBuilder builder;
     private static final String FORMATO = "%3d   ";
 
-    public Procedimiento(JTable tablaOriginal, JTable tablaResultado, JTextArea txtResultados) {
+    public Procedimiento(JTable tablaOriginal, JTable tablaResultado, JTextArea txtResultados, JTextField txtSuma) {
         this.tablaOriginal = tablaOriginal;
         this.tablaResultado = tablaResultado;
         this.txtResultados = txtResultados;
+        this.txtSuma = txtSuma;
 
         contador = 1;
         builder = new StringBuilder(Instrucciones.TITULO);
@@ -361,6 +364,7 @@ public class Procedimiento {
 
     private void escribirResuldados() {
         StringBuilder sb = new StringBuilder();
+        int suma = 0;
         for (int renglon = 0; renglon < matriz.length; renglon++) {
             for (int columna = 0; columna < matriz.length; columna++) {
                 if (mapaMatriz.get(renglon + "|" + columna).isSeleccionado()) {
@@ -368,14 +372,16 @@ public class Procedimiento {
                     sb.append(" Columna: ").append((columna + 1));
                     sb.append(" El valor óptimo es: ").append(tablaResultado.getValueAt(renglon, columna));
                     sb.append("\n");
+                    suma += new Integer(tablaResultado.getValueAt(renglon, columna).toString());
                 }
             }
         }
-         if (sb.toString().isEmpty()) {
-                txtResultados.setText(Instrucciones.SIN_SOLUCION.concat(Instrucciones.REVISAR_PROCEDIMIENTO));
-            } else {
-                txtResultados.setText(txtResultados.getText() + sb.toString());
-            }
+        txtSuma.setText(String.valueOf(suma));
+        if (sb.toString().isEmpty()) {
+            txtResultados.setText(Instrucciones.SIN_SOLUCION.concat(Instrucciones.REVISAR_PROCEDIMIENTO));
+        } else {
+            txtResultados.setText(txtResultados.getText() + sb.toString());
+        }
     }
 
     private void generarResultado() {
