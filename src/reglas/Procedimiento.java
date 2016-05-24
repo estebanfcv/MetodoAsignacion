@@ -31,12 +31,14 @@ public class Procedimiento {
     private int contador;
     private StringBuilder builder;
     private static final String FORMATO = "%.1f   ";
+    private boolean minimizacion;
 
-    public Procedimiento(JTable tablaOriginal, JTable tablaResultado, JTextArea txtResultados, JTextField txtSuma) {
+    public Procedimiento(JTable tablaOriginal, JTable tablaResultado, JTextArea txtResultados, JTextField txtSuma, boolean minimizacion) {
         this.tablaOriginal = tablaOriginal;
         this.tablaResultado = tablaResultado;
         this.txtResultados = txtResultados;
         this.txtSuma = txtSuma;
+        this.minimizacion = minimizacion;
 
         contador = 1;
         builder = new StringBuilder(Instrucciones.TITULO);
@@ -55,6 +57,10 @@ public class Procedimiento {
             }
             builder.append("\n\n");
         }
+        System.out.println("minimizacion es::::::: "+minimizacion);
+        if (!minimizacion) {
+            pasoCero();
+        }
         pasoUno();
         pasoDos();
         pasoTres();
@@ -62,6 +68,28 @@ public class Procedimiento {
         pasoCinco();
         pintarMatriz();
         escribirResuldados();
+    }
+
+    private void pasoCero() {
+        //1. Seleccionar de toda la matriz de beneficios el mayor término numérico
+        builder.append(Instrucciones.PASO_0);
+        double valorGrande = 0;
+        for (int renglon = 0; renglon < matriz.length; renglon++) {
+            for (int columna = 0; columna < matriz.length; columna++) {
+                if (matriz[renglon][columna] > valorGrande) {
+                    valorGrande = matriz[renglon][columna];
+                }
+            }
+        }
+        builder.append("\nEl valor mayor es: ").append(valorGrande).append("\n");
+        //2. Una vez seleccionado Deben restarse todos los demás valores de la matriz original
+        System.out.println("el valor máximo es:::::: " + valorGrande);
+        for (int renglon = 0; renglon < matriz.length; renglon++) {
+            for (int columna = 0; columna < matriz.length; columna++) {
+                matriz[renglon][columna] = valorGrande - matriz[renglon][columna];
+            }
+        }
+        imprimirDatosMaximizados(Instrucciones.PASO_01);
     }
 
     private void pasoUno() {
@@ -393,6 +421,16 @@ public class Procedimiento {
                     tablaResultado.setValueAt(matriz[renglon][columna], renglon, columna);
                 }
             }
+        }
+    }
+
+    private void imprimirDatosMaximizados(String comentario) {
+        builder.append(comentario).append("\n");
+        for (int renglon = 0; renglon < matriz.length; renglon++) {
+            for (int columna = 0; columna < matriz.length; columna++) {
+                builder.append(String.format(FORMATO, matriz[renglon][columna]));
+            }
+            builder.append("\n");
         }
     }
 

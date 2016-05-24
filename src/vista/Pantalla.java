@@ -16,6 +16,7 @@ import util.Util;
 public class Pantalla extends javax.swing.JFrame {
 
     private Procedimiento procedimiento;
+    private boolean minimizacion;
 
     /**
      * Creates new form Pantalla
@@ -34,8 +35,7 @@ public class Pantalla extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel3 = new javax.swing.JLabel();
-        buttonGroup1 = new javax.swing.ButtonGroup();
-        buttonGroup2 = new javax.swing.ButtonGroup();
+        group = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         spinner = new JSpinner(new SpinnerNumberModel(1, 1, 10, 1));
         botonCalcular = new javax.swing.JButton();
@@ -54,6 +54,9 @@ public class Pantalla extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaOriginal = new javax.swing.JTable();
         botonLimpiar = new javax.swing.JButton();
+        radioMin = new javax.swing.JRadioButton();
+        radioMax = new javax.swing.JRadioButton();
+        jLabel6 = new javax.swing.JLabel();
 
         jLabel3.setText("jLabel3");
 
@@ -196,7 +199,7 @@ public class Pantalla extends javax.swing.JFrame {
 
         tablaOriginal.setModel(new javax.swing.table.DefaultTableModel(
             new Double [][] {
-                {0d}
+                {0.0}
             },
             new String [] {
                 "A"
@@ -216,14 +219,39 @@ public class Pantalla extends javax.swing.JFrame {
             }
         });
 
+        group.add(radioMin);
+        radioMin.setSelected(true);
+        radioMin.setText("Minimización");
+        radioMin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioMinActionPerformed(evt);
+            }
+        });
+
+        group.add(radioMax);
+        radioMax.setText("Maximización");
+        radioMax.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioMaxActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("Método de asignación:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(281, 281, 281)
+                .addGap(20, 20, 20)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23)
+                .addComponent(radioMin, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17)
+                .addComponent(radioMax, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addGap(13, 13, 13)
                 .addComponent(spinner, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
@@ -240,13 +268,16 @@ public class Pantalla extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(spinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(jLabel1))
-                    .addComponent(spinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6)
+                        .addGap(5, 5, 5)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(radioMin)
+                            .addComponent(radioMax)
+                            .addComponent(jLabel1))))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -266,6 +297,7 @@ public class Pantalla extends javax.swing.JFrame {
         resultados.setMargin(new Insets(-5, 0, -5, 0));
         DefaultCaret caret = (DefaultCaret) resultados.getCaret();
         caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
+        minimizacion = true;
     }//GEN-LAST:event_formWindowOpened
 
     private void botonCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCalcularActionPerformed
@@ -288,7 +320,7 @@ public class Pantalla extends javax.swing.JFrame {
         DefaultTableModel dtm = new DefaultTableModel(datos, columnas);
         tablaResultados.setModel(dtm);
         resultados.setText("");
-        procedimiento = new Procedimiento(tablaOriginal, tablaResultados, resultados,txtSuma);
+        procedimiento = new Procedimiento(tablaOriginal, tablaResultados, resultados, txtSuma, minimizacion);
 
     }//GEN-LAST:event_botonCalcularActionPerformed
 
@@ -325,6 +357,14 @@ public class Pantalla extends javax.swing.JFrame {
         pantallaProcedimiento.setVisible(true);
         pantallaProcedimiento.getTxtProcedimiento().setText(procedimiento.getPasos());
     }//GEN-LAST:event_botonProcedimientoActionPerformed
+
+    private void radioMinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioMinActionPerformed
+        minimizacion = true;
+    }//GEN-LAST:event_radioMinActionPerformed
+
+    private void radioMaxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioMaxActionPerformed
+        minimizacion = false;
+    }//GEN-LAST:event_radioMaxActionPerformed
 
     private void inicializarTabla() {
         int nuevoNumero = (int) spinner.getValue();
@@ -384,19 +424,21 @@ public class Pantalla extends javax.swing.JFrame {
     private javax.swing.JButton botonCalcular;
     private javax.swing.JButton botonLimpiar;
     private javax.swing.JButton botonProcedimiento;
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.ButtonGroup group;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JPanel panelOriginal;
+    private javax.swing.JRadioButton radioMax;
+    private javax.swing.JRadioButton radioMin;
     private javax.swing.JTextArea resultados;
     private javax.swing.JSpinner spinner;
     private javax.swing.JTable tablaOriginal;
