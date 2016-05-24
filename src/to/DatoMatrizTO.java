@@ -6,7 +6,7 @@ package to;
  */
 public class DatoMatrizTO {
     
-    private int valor;
+    private double valor;
     private int renglon;
     private int columna;
     private boolean cero;
@@ -14,11 +14,11 @@ public class DatoMatrizTO {
     private boolean cruzado;
     private boolean eliminado;
 
-    public int getValor() {
+    public double getValor() {
         return valor;
     }
 
-    public void setValor(int valor) {
+    public void setValor(double valor) {
         this.valor = valor;
     }
 

@@ -21,8 +21,16 @@ public class Util {
         }
         return true;
     }
-    
-    
+
+    public static boolean isDouble(String s) {
+        try {
+            Double.parseDouble(s);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public static String debugImprimirContenidoObjecto(Object o) {
         if (null == o) {
             return "null";

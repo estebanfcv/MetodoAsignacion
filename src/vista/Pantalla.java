@@ -195,8 +195,8 @@ public class Pantalla extends javax.swing.JFrame {
         );
 
         tablaOriginal.setModel(new javax.swing.table.DefaultTableModel(
-            new Integer [][] {
-                {0}
+            new Double [][] {
+                {0d}
             },
             new String [] {
                 "A"
@@ -279,10 +279,10 @@ public class Pantalla extends javax.swing.JFrame {
             columnas[j] = "" + (c++);
         }
 
-        Integer[][] datos = new Integer[nuevoNumero][nuevoNumero];
+        Double[][] datos = new Double[nuevoNumero][nuevoNumero];
         for (int renglon = 0; renglon < datos.length; renglon++) {
             for (int columna = 0; columna < datos.length; columna++) {
-                datos[renglon][columna] = (Integer) tablaOriginal.getValueAt(renglon, columna);
+                datos[renglon][columna] = (Double) tablaOriginal.getValueAt(renglon, columna);
             }
         }
         DefaultTableModel dtm = new DefaultTableModel(datos, columnas);
@@ -301,10 +301,10 @@ public class Pantalla extends javax.swing.JFrame {
         int colum = tablaOriginal.getSelectedColumn();
         if (row != -1 && colum != -1) {
             Object valor = tablaOriginal.getValueAt(row, colum);
-            if (valor == null || valor.toString().trim().isEmpty() || !Util.isNumero(valor.toString())) {
-                tablaOriginal.setValueAt(0, row, colum);
+            if (valor == null || valor.toString().trim().isEmpty() || !Util.isDouble(valor.toString())) {
+                tablaOriginal.setValueAt(0.0, row, colum);
             } else {
-                tablaOriginal.setValueAt(new Integer(valor.toString()), row, colum);
+                tablaOriginal.setValueAt(new Double(valor.toString()), row, colum);
             }
         }
     }//GEN-LAST:event_tablaOriginalPropertyChange
@@ -335,10 +335,10 @@ public class Pantalla extends javax.swing.JFrame {
             columnas[j] = "" + (c++);
         }
 
-        Integer[][] datos = new Integer[nuevoNumero][nuevoNumero];
-        for (Integer[] dato : datos) {
+        Double[][] datos = new Double[nuevoNumero][nuevoNumero];
+        for (Double[] dato : datos) {
             for (int i = 0; i < datos.length; i++) {
-                dato[i] = 0;
+                dato[i] = 0d;
             }
         }
         DefaultTableModel dtm = new DefaultTableModel(datos, columnas);

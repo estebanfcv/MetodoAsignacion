@@ -22,7 +22,7 @@ public class Procedimiento {
     private JTable tablaResultado;
     private JTextArea txtResultados;
     private JTextField txtSuma;
-    private Integer[][] matriz;
+    private Double[][] matriz;
     private int numero;
     private Map<Integer, String> renglonesTachados;
     private Map<Integer, String> columnasTachadas;
@@ -30,7 +30,7 @@ public class Procedimiento {
     private Map<Integer, String> columnasLinea;
     private int contador;
     private StringBuilder builder;
-    private static final String FORMATO = "%3d   ";
+    private static final String FORMATO = "%.1f   ";
 
     public Procedimiento(JTable tablaOriginal, JTable tablaResultado, JTextArea txtResultados, JTextField txtSuma) {
         this.tablaOriginal = tablaOriginal;
@@ -42,10 +42,10 @@ public class Procedimiento {
         builder = new StringBuilder(Instrucciones.TITULO);
         builder.append(Instrucciones.SUBTITULO_1).append(contador).append(Instrucciones.SUBTITULO_2);
         numero = tablaOriginal.getRowCount();
-        matriz = new Integer[numero][numero];
+        matriz = new Double[numero][numero];
         for (int renglon = 0; renglon < matriz.length; renglon++) {
             for (int columna = 0; columna < matriz.length; columna++) {
-                matriz[renglon][columna] = (Integer) tablaOriginal.getValueAt(renglon, columna);
+                matriz[renglon][columna] = (Double) tablaOriginal.getValueAt(renglon, columna);
             }
         }
         builder.append(Instrucciones.MATRIZ_ORIGINAL);
@@ -67,7 +67,7 @@ public class Procedimiento {
     private void pasoUno() {
         //Restar el valor más pequeño de cada uno de los valores de la columna y de si mismo.
         builder.append(Instrucciones.PASO_1);
-        int valorPequeño = 0;
+        double valorPequeño = 0;
         boolean firstTime;
         for (int columna = 0; columna < matriz.length; columna++) {
             firstTime = true;
@@ -90,7 +90,7 @@ public class Procedimiento {
     private void pasoDos() {
         // Restar el valor más pequeño de cada renglón de los demás valores de ese renglón y de si mismo.
         builder.append(Instrucciones.PASO_2);
-        int valorPequeño = 0;
+        double valorPequeño = 0;
         boolean firstTime;
         for (int renglon = 0; renglon < matriz.length; renglon++) {
             firstTime = true;
@@ -302,7 +302,7 @@ public class Procedimiento {
         if (numeroSeleccionados != numero) {
             builder.append(Instrucciones.PASO_51);
             //seleccionar el valor más pequeño el cual no debe estar cruzado por ninguna línea,
-            int valorPequeño = 0;
+            double valorPequeño = 0;
             boolean firstTime = true;
             for (int renglon = 0; renglon < matriz.length; renglon++) {
                 if (renglonesLinea.get(renglon) != null) {
@@ -364,7 +364,7 @@ public class Procedimiento {
 
     private void escribirResuldados() {
         StringBuilder sb = new StringBuilder();
-        int suma = 0;
+        double suma = 0;
         for (int renglon = 0; renglon < matriz.length; renglon++) {
             for (int columna = 0; columna < matriz.length; columna++) {
                 if (mapaMatriz.get(renglon + "|" + columna).isSeleccionado()) {
@@ -372,7 +372,7 @@ public class Procedimiento {
                     sb.append(" Columna: ").append((columna + 1));
                     sb.append(" El valor óptimo es: ").append(tablaResultado.getValueAt(renglon, columna));
                     sb.append("\n");
-                    suma += new Integer(tablaResultado.getValueAt(renglon, columna).toString());
+                    suma += new Double(tablaResultado.getValueAt(renglon, columna).toString());
                 }
             }
         }
