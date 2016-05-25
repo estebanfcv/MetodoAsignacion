@@ -42,6 +42,7 @@ public class Procedimiento {
 
         contador = 1;
         builder = new StringBuilder(Instrucciones.TITULO);
+        builder.append(!minimizacion ? "\n*** MÉTODO DE MAXIMIZACIÓN ***\n\n" : "\n*** MÉTODO DE MINIMIZACIÓN ***\n\n");
         builder.append(Instrucciones.SUBTITULO_1).append(contador).append(Instrucciones.SUBTITULO_2);
         numero = tablaOriginal.getRowCount();
         matriz = new Double[numero][numero];
@@ -57,7 +58,6 @@ public class Procedimiento {
             }
             builder.append("\n\n");
         }
-        System.out.println("minimizacion es::::::: "+minimizacion);
         if (!minimizacion) {
             pasoCero();
         }
@@ -81,9 +81,8 @@ public class Procedimiento {
                 }
             }
         }
-        builder.append("\nEl valor mayor es: ").append(valorGrande).append("\n");
+        builder.append("\n\nEl valor mayor es: ").append(valorGrande).append("\n\n");
         //2. Una vez seleccionado Deben restarse todos los demás valores de la matriz original
-        System.out.println("el valor máximo es:::::: " + valorGrande);
         for (int renglon = 0; renglon < matriz.length; renglon++) {
             for (int columna = 0; columna < matriz.length; columna++) {
                 matriz[renglon][columna] = valorGrande - matriz[renglon][columna];
@@ -432,6 +431,7 @@ public class Procedimiento {
             }
             builder.append("\n");
         }
+        builder.append("\n");
     }
 
     private void imprimirDatos(String comentario, boolean isMatriz, boolean mostrarSimbologia) {

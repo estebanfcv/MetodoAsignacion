@@ -14,7 +14,7 @@ public class Instrucciones {
     public static final String MATRIZ_ORIGINAL = "Matriz Original\n\n";
     public static final String MATRIZ_FINAL = "Matriz Final\n";
     public static final String PASO_0 = "PASO 0: \nSeleccionar de toda la matriz de beneficios el mayor término numérico\n\n";
-    public static final String PASO_01 = "PASO 0: \nUna vez seleccionado deben restarse todos los demás valores de la matriz original\n\n";
+    public static final String PASO_01 = "\nUna vez seleccionado deben restarse todos los demás valores de la matriz original\n\n";
     public static final String PASO_1 = "PASO 1: \nRestar el valor más pequeño de cada uno de los valores de la columna y de si mismo.\n\n";
     public static final String PASO_2 = "PASO 2: \nRestar el valor más pequeño de cada renglón de los demás valores de ese renglón y de si mismo.\n\n";
     public static final String PASO_3 = "PASO 3: \nDeben escogerse los 0’s que sean únicos tanto en renglón como en columna y marcarlos.\n";
